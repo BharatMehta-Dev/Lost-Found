@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Found Items | Lost & Found</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <header class="navbar">
+
+        <div class="container nav-content">
+
+            <a href="dashboard.html" class="logo">
+                Lost<span>&</span>Found
+            </a>
+
+
+            <nav class="nav-links">
+
+                <a href="dashboard.html">
+                    Dashboard
+                </a>
+
+                <a href="lost.html">
+                    Lost
+                </a>
+
+                <a href="found.html" class="active">
+                    Found
+                </a>
+
+                <a href="notifications.html">
+                    🔔
+                </a>
+
+            </nav>
+
+        </div>
+
+    </header>
+
+
+    <main>
+
+        <section class="page-header">
+
+            <div class="container">
+
+                <span>
+                    FOUND ITEMS
+                </span>
+
+                <h1>
+                    Items Found on Campus
+                </h1>
+
+                <p>
+                    Browse found items or report something you've found.
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <section class="section">
+
+            <div class="container">
+
+
+                <!-- Search and Filter -->
+
+                <div class="search-panel">
+
+                    <div class="search-box">
+
+                        <input type="search" id="searchInput" placeholder="Search items...">
+
+                        <button type="button" id="searchButton">
+                            🔍
+                        </button>
+
+                    </div>
+
+
+                    <div class="filter-row">
+
+                        <select id="categoryFilter">
+
+                            <option value="">
+                                All Categories
+                            </option>
+
+                            <option value="electronics">
+                                Electronics
+                            </option>
+
+                            <option value="bags">
+                                Bags
+                            </option>
+
+                            <option value="clothing">
+                                Clothing
+                            </option>
+
+                            <option value="documents">
+                                Documents
+                            </option>
+
+                            <option value="keys">
+                                Keys
+                            </option>
+
+                            <option value="accessories">
+                                Accessories
+                            </option>
+
+                            <option value="books">
+                                Books
+                            </option>
+
+                        </select>
+
+
+                        <select id="areaFilter">
+
+                            <option value="">
+                                Campus & Hostel
+                            </option>
+
+                            <option value="campus">
+                                Campus
+                            </option>
+
+                            <option value="hostel">
+                                Hostel
+                            </option>
+
+                        </select>
+
+
+                        <select id="locationFilter">
+
+                            <option value="">
+                                All Locations
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Report Found -->
+
+                <div class="report-banner">
+
+                    <div>
+
+                        <span>
+                            FOUND SOMETHING?
+                        </span>
+
+                        <h2>
+                            Help return it to its owner.
+                        </h2>
+
+                    </div>
+
+
+                    <button type="button" class="btn btn-primary" id="showFoundForm">
+                        Report Found Item
+                    </button>
+
+                </div>
+
+
+                <!-- Found Items -->
+
+                <div class="section-title-row">
+
+                    <div>
+
+                        <span>
+                            RECENT REPORTS
+                        </span>
+
+                        <h2>
+                            Found Items
+                        </h2>
+
+                    </div>
+
+                    <span id="resultCount">
+                        0 items
+                    </span>
+
+                </div>
+
+
+                <div id="foundItemsGrid" class="items-grid">
+
+                    <!-- Dynamic items will be inserted here -->
+
+                    <div class="empty-state">
+
+                        <div class="empty-icon">
+                            📦
+                        </div>
+
+                        <h3>
+                            No found items yet
+                        </h3>
+
+                        <p>
+                            Found item reports will appear here.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Found Item Form -->
+
+                <div id="foundFormContainer" class="modal-container hidden">
+
+                    <div class="modal-card">
+
+                        <button type="button" class="modal-close" id="closeFoundForm">
+                            ×
+                        </button>
+
+
+                        <div class="modal-header">
+
+                            <span>
+                                FOUND ITEM
+                            </span>
+
+                            <h2>
+                                Report Something You Found
+                            </h2>
+
+                            <p>
+                                Provide accurate information to help the owner
+                                identify their item.
+                            </p>
+
+                        </div>
+
+
+                        <form id="foundItemForm">
+
+                            <div class="form-group">
+
+                                <label for="foundItemName">
+                                    Item Name
+                                </label>
+
+                                <input type="text" id="foundItemName" name="itemName" placeholder="e.g. Black Backpack"
+                                    required>
+
+                            </div>
+
+
+                            <div class="form-row">
+
+                                <div class="form-group">
+
+                                    <label for="foundCategory">
+                                        Category
+                                    </label>
+
+                                    <select id="foundCategory" name="category" required>
+
+                                        <option value="">
+                                            Select category
+                                        </option>
+
+                                        <option value="electronics">
+                                            Electronics
+                                        </option>
+
+                                        <option value="bags">
+                                            Bags
+                                        </option>
+
+                                        <option value="clothing">
+                                            Clothing
+                                        </option>
+
+                                        <option value="documents">
+                                            Documents
+                                        </option>
+
+                                        <option value="keys">
+                                            Keys
+                                        </option>
+
+                                        <option value="accessories">
+                                            Accessories
+                                        </option>
+
+                                        <option value="books">
+                                            Books
+                                        </option>
+
+                                        <option value="other">
+                                            Other
+                                        </option>
+
+                                    </select>
+
+                                </div>
+
+
+                                <div class="form-group">
+
+                                    <label for="foundBrand">
+                                        Brand
+                                    </label>
+
+                                    <input type="text" id="foundBrand" name="brand" placeholder="e.g. Skybags">
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label for="foundColor">
+                                    Color
+                                </label>
+
+                                <input type="text" id="foundColor" name="color" placeholder="e.g. Black">
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label for="foundDescription">
+                                    Description
+                                </label>
+
+                                <textarea id="foundDescription" name="description" rows="4"
+                                    placeholder="Describe the item..." required></textarea>
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label for="foundImage">
+                                    Item Image
+                                </label>
+
+                                <input type="file" id="foundImage" name="itemImage" accept="image/*">
+
+                            </div>
+
+
+                            <div class="form-row">
+
+                                <div class="form-group">
+
+                                    <label for="foundAreaType">
+                                        Area
+                                    </label>
+
+                                    <select id="foundAreaType" name="areaType" required>
+
+                                        <option value="">
+                                            Select area
+                                        </option>
+
+                                        <option value="campus">
+                                            Campus
+                                        </option>
+
+                                        <option value="hostel">
+                                            Hostel
+                                        </option>
+
+                                    </select>
+
+                                </div>
+
+
+                                <div class="form-group">
+
+                                    <label for="foundLocation">
+                                        Location
+                                    </label>
+
+                                    <input type="text" id="foundLocation" name="location"
+                                        placeholder="Where did you find it?" required>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="form-row">
+
+                                <div class="form-group">
+
+                                    <label for="foundDate">
+                                        Date Found
+                                    </label>
+
+                                    <input type="date" id="foundDate" name="date" required>
+
+                                </div>
+
+
+                                <div class="form-group">
+
+                                    <label for="foundTime">
+                                        Approximate Time
+                                    </label>
+
+                                    <input type="time" id="foundTime" name="time">
+
+                                </div>
+
+                            </div>
+
+
+                            <button type="submit" class="btn btn-primary btn-full">
+                                Submit Found Report
+                            </button>
+
+                        </form>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <script src="js/main.js"></script>
+    <script src="js/found.js"></script>
+
+</body>
+
+</html>

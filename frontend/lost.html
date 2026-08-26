@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Report Lost Item | Lost & Found</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <header class="navbar">
+
+        <div class="container nav-content">
+
+            <a href="dashboard.html" class="logo">
+                Lost<span>&</span>Found
+            </a>
+
+
+            <nav class="nav-links">
+
+                <a href="dashboard.html">
+                    Dashboard
+                </a>
+
+                <a href="lost.html" class="active">
+                    Lost
+                </a>
+
+                <a href="found.html">
+                    Found
+                </a>
+
+                <a href="notifications.html">
+                    🔔
+                </a>
+
+            </nav>
+
+        </div>
+
+    </header>
+
+
+    <main>
+
+        <section class="page-header">
+
+            <div class="container">
+
+                <span>
+                    LOST ITEM
+                </span>
+
+                <h1>
+                    Report a Lost Item
+                </h1>
+
+                <p>
+                    Provide as much information as possible so the system
+                    can find potential matches.
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <section class="section">
+
+            <div class="container form-container">
+
+                <form id="lostItemForm" class="item-form">
+
+
+                    <div class="form-section">
+
+                        <div class="form-section-header">
+
+                            <span>01</span>
+
+                            <div>
+                                <h2>Item Information</h2>
+
+                                <p>
+                                    Tell us about the item you lost.
+                                </p>
+                            </div>
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label for="itemName">
+                                Item Name
+                            </label>
+
+                            <input type="text" id="itemName" name="itemName" placeholder="e.g. Black Backpack" required>
+
+                        </div>
+
+
+                        <div class="form-row">
+
+                            <div class="form-group">
+
+                                <label for="category">
+                                    Category
+                                </label>
+
+                                <select id="category" name="category" required>
+
+                                    <option value="">
+                                        Select category
+                                    </option>
+
+                                    <option value="electronics">
+                                        Electronics
+                                    </option>
+
+                                    <option value="bags">
+                                        Bags
+                                    </option>
+
+                                    <option value="clothing">
+                                        Clothing
+                                    </option>
+
+                                    <option value="documents">
+                                        Documents
+                                    </option>
+
+                                    <option value="keys">
+                                        Keys
+                                    </option>
+
+                                    <option value="accessories">
+                                        Accessories
+                                    </option>
+
+                                    <option value="books">
+                                        Books
+                                    </option>
+
+                                    <option value="other">
+                                        Other
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label for="brand">
+                                    Brand
+                                </label>
+
+                                <input type="text" id="brand" name="brand" placeholder="e.g. Skybags">
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="form-row">
+
+                            <div class="form-group">
+
+                                <label for="color">
+                                    Primary Color
+                                </label>
+
+                                <input type="text" id="color" name="color" placeholder="e.g. Black">
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label for="itemImage">
+                                    Item Image
+                                </label>
+
+                                <input type="file" id="itemImage" name="itemImage" accept="image/*">
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label for="description">
+                                Description
+                            </label>
+
+                            <textarea id="description" name="description" rows="5"
+                                placeholder="Describe the item, including unique features, marks, stickers, accessories, etc."
+                                required></textarea>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="form-section">
+
+                        <div class="form-section-header">
+
+                            <span>02</span>
+
+                            <div>
+                                <h2>Where & When?</h2>
+
+                                <p>
+                                    This information helps the matchmaking system.
+                                </p>
+                            </div>
+
+                        </div>
+
+
+                        <div class="form-row">
+
+                            <div class="form-group">
+
+                                <label for="areaType">
+                                    Area
+                                </label>
+
+                                <select id="areaType" name="areaType" required>
+
+                                    <option value="">
+                                        Select area
+                                    </option>
+
+                                    <option value="campus">
+                                        Campus
+                                    </option>
+
+                                    <option value="hostel">
+                                        Hostel
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label for="location">
+                                    Location
+                                </label>
+
+                                <input type="text" id="location" name="location" placeholder="e.g. Central Library"
+                                    required>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="form-row">
+
+                            <div class="form-group">
+
+                                <label for="lostDate">
+                                    Date Lost
+                                </label>
+
+                                <input type="date" id="lostDate" name="lostDate" required>
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label for="lostTime">
+                                    Approximate Time
+                                </label>
+
+                                <input type="time" id="lostTime" name="lostTime">
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="form-section verification-section">
+
+                        <div class="form-section-header">
+
+                            <span>03</span>
+
+                            <div>
+                                <h2>Private Verification Details</h2>
+
+                                <p>
+                                    These details will not be publicly displayed.
+                                    They may be used later to verify ownership.
+                                </p>
+                            </div>
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label for="privateDetails">
+                                Identifying Details
+                            </label>
+
+                            <textarea id="privateDetails" name="privateDetails" rows="4"
+                                placeholder="Example: Small red keychain attached to the side zipper."></textarea>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="form-actions">
+
+                        <a href="dashboard.html" class="btn btn-secondary">
+                            Cancel
+                        </a>
+
+                        <button type="submit" class="btn btn-primary">
+                            Submit Lost Report
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <script src="js/main.js"></script>
+    <script src="js/lost.js"></script>
+
+</body>
+
+</html>

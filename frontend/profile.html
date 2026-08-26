@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Profile | Lost & Found</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <header class="navbar">
+
+        <div class="container nav-content">
+
+            <a href="dashboard.html" class="logo">
+                Lost<span>&</span>Found
+            </a>
+
+            <nav class="nav-links">
+
+                <a href="dashboard.html">
+                    Dashboard
+                </a>
+
+                <a href="lost.html">
+                    Lost
+                </a>
+
+                <a href="found.html">
+                    Found
+                </a>
+
+                <a href="notifications.html">
+                    🔔
+                </a>
+
+                <a href="claims.html">
+                    Claims
+                </a>
+
+                <a href="profile.html" class="active">
+                    Profile
+                </a>
+
+            </nav>
+
+        </div>
+
+    </header>
+
+
+    <!-- Main Content -->
+    <main>
+
+        <!-- Page Header -->
+        <section class="page-header">
+
+            <div class="container">
+
+                <span>
+                    ACCOUNT
+                </span>
+
+                <h1>
+                    My Profile
+                </h1>
+
+                <p>
+                    View and manage your student account information.
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- Profile Section -->
+        <section class="section">
+
+            <div class="container profile-container">
+
+                <!-- Profile Card -->
+                <div class="profile-card">
+
+                    <div class="profile-top">
+
+                        <div class="profile-avatar" id="profileAvatar">
+                            S
+                        </div>
+
+                        <div class="profile-main-info">
+
+                            <h2 id="profileName">
+                                Student Name
+                            </h2>
+
+                            <p id="profileEmail">
+                                student@college.edu
+                            </p>
+
+                            <span class="verified-badge">
+                                ✓ Institute Verified
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Personal Information -->
+                    <div class="profile-section">
+
+                        <div class="profile-section-heading">
+
+                            <span>
+                                PERSONAL INFORMATION
+                            </span>
+
+                            <h3>
+                                Student Details
+                            </h3>
+
+                        </div>
+
+
+                        <div class="profile-details-grid">
+
+                            <div class="profile-detail">
+
+                                <span>
+                                    Full Name
+                                </span>
+
+                                <strong id="profileFullName">
+                                    Student Name
+                                </strong>
+
+                            </div>
+
+
+                            <div class="profile-detail">
+
+                                <span>
+                                    Institute Email
+                                </span>
+
+                                <strong id="profileInstituteEmail">
+                                    student@college.edu
+                                </strong>
+
+                            </div>
+
+
+                            <div class="profile-detail">
+
+                                <span>
+                                    Department
+                                </span>
+
+                                <strong id="profileDepartment">
+                                    Computer Science
+                                </strong>
+
+                            </div>
+
+
+                            <div class="profile-detail">
+
+                                <span>
+                                    Year
+                                </span>
+
+                                <strong id="profileYear">
+                                    2nd Year
+                                </strong>
+
+                            </div>
+
+
+                            <div class="profile-detail">
+
+                                <span>
+                                    Hostel
+                                </span>
+
+                                <strong id="profileHostel">
+                                    Hostel 3
+                                </strong>
+
+                            </div>
+
+
+                            <div class="profile-detail">
+
+                                <span>
+                                    Account Status
+                                </span>
+
+                                <strong class="status-active">
+                                    Active
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Activity -->
+                    <div class="profile-section">
+
+                        <div class="profile-section-heading">
+
+                            <span>
+                                ACTIVITY
+                            </span>
+
+                            <h3>
+                                My Lost & Found Activity
+                            </h3>
+
+                        </div>
+
+
+                        <div class="profile-stats">
+
+                            <div class="profile-stat">
+
+                                <strong id="profileLostCount">
+                                    0
+                                </strong>
+
+                                <span>
+                                    Lost Reports
+                                </span>
+
+                            </div>
+
+
+                            <div class="profile-stat">
+
+                                <strong id="profileFoundCount">
+                                    0
+                                </strong>
+
+                                <span>
+                                    Found Reports
+                                </span>
+
+                            </div>
+
+
+                            <div class="profile-stat">
+
+                                <strong id="profileClaimCount">
+                                    0
+                                </strong>
+
+                                <span>
+                                    Claims
+                                </span>
+
+                            </div>
+
+
+                            <div class="profile-stat">
+
+                                <strong id="profileReturnedCount">
+                                    0
+                                </strong>
+
+                                <span>
+                                    Items Returned
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Account Actions -->
+                    <div class="profile-section">
+
+                        <div class="profile-section-heading">
+
+                            <span>
+                                ACCOUNT
+                            </span>
+
+                            <h3>
+                                Account Actions
+                            </h3>
+
+                        </div>
+
+
+                        <div class="profile-actions">
+
+                            <button type="button" class="btn btn-secondary" id="editProfileBtn">
+                                Edit Profile
+                            </button>
+
+
+                            <button type="button" class="btn btn-secondary" id="changePasswordBtn">
+                                Change Password
+                            </button>
+
+
+                            <button type="button" class="btn btn-danger" id="logoutBtn">
+                                Logout
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Privacy Information -->
+                <div class="profile-privacy-card">
+
+                    <div class="privacy-icon">
+                        🔐
+                    </div>
+
+                    <div>
+
+                        <h3>
+                            Your information is protected
+                        </h3>
+
+                        <p>
+                            Your institute email and personal information
+                            are only used for authentication and platform
+                            functionality. Private verification details
+                            associated with lost items are never displayed
+                            publicly.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <script src="js/main.js"></script>
+    <script src="js/profile.js"></script>
+
+</body>
+
+</html>

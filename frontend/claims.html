@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Claims | Lost & Found</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <header class="navbar">
+
+        <div class="container nav-content">
+
+            <a href="dashboard.html" class="logo">
+                Lost<span>&</span>Found
+            </a>
+
+
+            <nav class="nav-links">
+
+                <a href="dashboard.html">
+                    Dashboard
+                </a>
+
+                <a href="lost.html">
+                    Lost
+                </a>
+
+                <a href="found.html">
+                    Found
+                </a>
+
+                <a href="notifications.html">
+                    🔔
+                </a>
+
+                <a href="claims.html" class="active">
+                    Claims
+                </a>
+
+            </nav>
+
+        </div>
+
+    </header>
+
+
+    <main>
+
+        <section class="page-header">
+
+            <div class="container">
+
+                <span>
+                    CLAIMS & VERIFICATION
+                </span>
+
+                <h1>
+                    Your Claims
+                </h1>
+
+                <p>
+                    Track potential matches and verification requests.
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <section class="section">
+
+            <div class="container">
+
+
+                <div class="claims-tabs">
+
+                    <button type="button" class="tab-button active" data-tab="myClaims">
+                        My Claims
+                    </button>
+
+                    <button type="button" class="tab-button" data-tab="verification">
+                        Verification
+                    </button>
+
+                </div>
+
+
+                <div id="myClaims" class="tab-content active">
+
+                    <div id="claimsList" class="claims-list">
+
+                        <div class="empty-state">
+
+                            <div class="empty-icon">
+                                📋
+                            </div>
+
+                            <h3>
+                                No claims yet
+                            </h3>
+
+                            <p>
+                                Potential claims will appear here.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div id="verification" class="tab-content">
+
+                    <div class="verification-info">
+
+                        <div class="verification-icon">
+                            🔐
+                        </div>
+
+                        <h2>
+                            Secure Item Verification
+                        </h2>
+
+                        <p>
+                            Verification helps ensure that a claimed item
+                            actually belongs to the person who reported it lost.
+                        </p>
+
+                    </div>
+
+
+                    <div id="verificationRequests" class="verification-list">
+
+                        <div class="empty-state">
+
+                            <div class="empty-icon">
+                                🔒
+                            </div>
+
+                            <h3>
+                                No verification requests
+                            </h3>
+
+                            <p>
+                                Verification requests will appear here when
+                                someone claims an item.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <script src="js/main.js"></script>
+    <script src="js/claims.js"></script>
+
+</body>
+
+</html>

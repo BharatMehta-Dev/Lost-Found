@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | Lost & Found System</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .split-auth-container {
+            display: grid;
+            grid-template-columns: 1.1fr 0.9fr;
+            gap: 60px;
+            align-items: center;
+            min-height: calc(100vh - 72px);
+            padding: 40px 0;
+        }
+        @media (max-width: 900px) {
+            .split-auth-container {
+                grid-template-columns: 1fr;
+            }
+        }
+        .auth-left-content h1 {
+            font-size: 3.2rem;
+            line-height: 1.1;
+            margin-bottom: 20px;
+            color: #172033;
+            letter-spacing: -1px;
+        }
+        .auth-left-content h1 span {
+            color: #10b981;
+        }
+        .auth-left-content p.desc {
+            font-size: 1.1rem;
+            color: #64748b;
+            margin-bottom: 40px;
+            max-width: 95%;
+        }
+        .auth-features {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        .auth-feature-card {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02);
+        }
+        .auth-feature-card .icon {
+            font-size: 1.4rem;
+            color: #3b82f6;
+            margin-bottom: 15px;
+            background: #eff6ff;
+            width: 42px;
+            height: 42px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+        }
+        .auth-feature-card h3 {
+            font-size: 0.95rem;
+            color: #1e293b;
+            margin-bottom: 6px;
+            font-weight: 700;
+        }
+        .auth-feature-card p {
+            font-size: 0.8rem;
+            color: #64748b;
+            margin: 0;
+            line-height: 1.4;
+        }
+        
+        .auth-right-content {
+            display: flex;
+            justify-content: center;
+        }
+        .google-btn {
+            background: #0f172a;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            font-weight: 600;
+            margin-top: 15px;
+            border: none;
+            transition: 0.2s ease;
+        }
+        .google-btn:hover {
+            background: #1e293b;
+        }
+        .auth-secure-note {
+            background: #f8fafc;
+            border: 1px solid #f1f5f9;
+            padding: 12px;
+            border-radius: 8px;
+            text-align: center;
+            margin-top: 15px;
+            font-size: 0.75rem;
+            color: #64748b;
+            line-height: 1.4;
+        }
+        .mits-logo-nav {
+            height: 42px;
+            width: auto;
+        }
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .nav-brand-text {
+            display: flex;
+            flex-direction: column;
+        }
+        .nav-brand-text strong {
+            font-size: 1.15rem;
+            line-height: 1.1;
+            color: #0f172a;
+            letter-spacing: -0.5px;
+        }
+        .nav-brand-text span {
+            font-size: 0.7rem;
+            color: #64748b;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 600;
+        }
+        
+        /* Navbar custom styles for auth page */
+        .auth-navbar {
+            background: #ffffff;
+            border-bottom: 1px solid #f1f5f9;
+        }
+        .auth-nav-links {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+        }
+        .auth-nav-links a {
+            color: #475569;
+            font-size: 0.95rem;
+            font-weight: 600;
+            transition: color 0.2s;
+        }
+        .auth-nav-links a:hover {
+            color: #0f172a;
+        }
+        
+        .footer-custom {
+            background: #0f172a; 
+            color: white; 
+            padding: 25px 0; 
+            margin-top: auto;
+        }
+    </style>
+</head>
+<body class="auth-page" style="background: #fcfcfc; display: flex; flex-direction: column; min-height: 100vh;">
+
+    <header class="navbar auth-navbar">
+        <div class="container nav-content">
+            <a href="index.html" class="nav-brand">
+                <img src="images/mits-logo.png" alt="MITS Logo" class="mits-logo-nav">
+                <div class="nav-brand-text">
+                    <strong>Lost & Found</strong>
+                    <span>MITS Gwalior</span>
+                </div>
+            </a>
+
+            <nav class="auth-nav-links">
+                <a href="index.html">Home</a>
+                <a href="lost.html">Lost Items</a>
+                <a href="found.html">Found Items</a>
+                <a href="login.html" style="color: #0f172a; font-weight: 600; font-size: 0.95rem; margin-left: 10px; text-decoration: none;">Login</a>
+                <a href="signup.html" class="btn btn-primary" style="background: #0f172a; color: white; border-radius: 8px; min-height: 40px; padding: 0 16px;">Sign Up</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container split-auth-container">
+        
+        <div class="auth-left-content">
+            <span class="hero-badge" style="background: #ecfdf5; color: #10b981; border: 1px solid #d1fae5; display: inline-flex; align-items: center; gap: 6px;">
+                <span style="font-size: 8px;">🟢</span> Official Portal - MITS Gwalior
+            </span>
+            
+            <h1>
+                Lost & Found
+                <br>
+                <span style="color: #10b981;">Management System</span>
+            </h1>
+            
+            <p class="desc">
+                A comprehensive platform for managing lost belongings, tracking claims, and fostering collaboration between students and faculty at MITS Gwalior.
+            </p>
+
+            <div class="auth-features">
+                <div class="auth-feature-card">
+                    <div class="icon">📁</div>
+                    <h3>Report Items</h3>
+                    <p>Easily report lost or found academic materials and personal items.</p>
+                </div>
+                <div class="auth-feature-card">
+                    <div class="icon">🤝</div>
+                    <h3>Smart Matching</h3>
+                    <p>Collaborate seamlessly to find potential matches quickly.</p>
+                </div>
+                <div class="auth-feature-card">
+                    <div class="icon">🎯</div>
+                    <h3>Secure Claims</h3>
+                    <p>Set verification milestones and securely claim your items.</p>
+                </div>
+                <div class="auth-feature-card">
+                    <div class="icon">🏅</div>
+                    <h3>Community Driven</h3>
+                    <p>Showcase integrity and help fellow students at MITS.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="auth-right-content">
+            <div class="auth-card" style="box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.08); text-align: center; border-radius: 16px; border: 1px solid #f1f5f9; background: white;">
+                <div style="background: #0ea5e9; width: 56px; height: 56px; border-radius: 14px; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px;">
+                    <span style="font-size: 1.6rem; color: white;">🎓</span>
+                </div>
+                
+                <h2 style="font-size: 1.5rem; color: #0f172a; margin-bottom: 6px; letter-spacing: -0.5px;">Sign in to L&F System</h2>
+                <p style="color: #64748b; font-size: 0.9rem; margin-bottom: 25px;">Access your campus lost & found dashboard</p>
+
+                <form id="loginForm" style="text-align: left;">
+                    <div class="form-group">
+                        <label for="email" style="font-size: 0.85rem;">Institute Email</label>
+                        <input type="email" id="email" name="email" placeholder="yourname@mitsgwalior.in" required style="height: 42px;">
+                    </div>
+                    <div class="form-group" style="margin-bottom: 15px;">
+                        <label for="password" style="font-size: 0.85rem;">Password</label>
+                        <input type="password" id="password" name="password" placeholder="Enter your password" required style="height: 42px;">
+                    </div>
+                    <button type="submit" class="btn btn-full" style="background: #0f172a; color: white; height: 44px; min-height: 44px; margin-top: 10px;">
+                        Sign In
+                    </button>
+                </form>
+
+                <div class="auth-divider" style="margin: 18px 0;">
+                    <span style="font-size: 0.7rem; color: #cbd5e1;">OR</span>
+                </div>
+
+                <button class="google-btn">
+                    <span style="background: white; border-radius: 50%; width: 22px; height: 22px; display: flex; align-items: center; justify-content: center; color: #000; font-weight: bold; font-size: 0.85rem;">G</span>
+                    Continue with Google
+                </button>
+
+                <div class="auth-secure-note">
+                    <span style="font-size: 1rem;">🛡️</span><br>
+                    Secure authentication powered by Google.<br>Use your institutional email to sign in.
+                </div>
+                
+                <div style="margin-top: 20px;">
+                    <a href="signup.html" style="color: #64748b; font-size: 0.85rem;">Don't have an account? <strong style="color: #0f172a;">Sign Up</strong></a>
+                </div>
+                <div style="margin-top: 12px;">
+                    <a href="index.html" style="color: #64748b; font-size: 0.85rem;">← Back to Home</a>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <footer class="footer-custom">
+        <div class="container" style="display: flex; justify-content: space-between; align-items: center; font-size: 0.8rem;">
+            <div style="display: flex; align-items: center; gap: 15px;">
+                <img src="images/mits-logo.png" alt="MITS Logo" style="height: 36px; background: white; border-radius: 50%; padding: 2px;">
+                <div>
+                    <strong style="display: block; font-size: 0.95rem; margin-bottom: 2px;">Lost & Found Management System</strong>
+                    <span style="color: #94a3b8;">MITS-DU, Gwalior</span>
+                </div>
+            </div>
+            <div style="text-align: right; color: #94a3b8; max-width: 350px; line-height: 1.5;">
+                The Official platform of MITS-DU, Gwalior for<br>Monitoring student's lost and found belongings.
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script src="js/auth.js"></script>
+</body>
+</html>

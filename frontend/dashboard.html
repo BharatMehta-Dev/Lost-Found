@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Dashboard | Lost & Found</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <header class="navbar">
+
+        <div class="container nav-content">
+
+            <a href="dashboard.html" class="logo">
+                Lost<span>&</span>Found
+            </a>
+
+
+            <nav class="nav-links">
+
+                <a href="dashboard.html" class="active">
+                    Dashboard
+                </a>
+
+                <a href="lost.html">
+                    Lost Items
+                </a>
+
+                <a href="found.html">
+                    Found Items
+                </a>
+
+                <a href="notifications.html" class="notification-link">
+                    🔔
+                    <span class="notification-count">0</span>
+                </a>
+
+                <a href="profile.html" class="profile-link">
+                    Profile
+                </a>
+
+            </nav>
+
+        </div>
+
+    </header>
+
+
+    <main>
+
+        <section class="dashboard-header">
+
+            <div class="container">
+
+                <span class="dashboard-label">
+                    STUDENT DASHBOARD
+                </span>
+
+                <h1>
+                    Welcome, <span id="userName">Student</span>
+                </h1>
+
+                <p>
+                    Manage your lost and found reports from one place.
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <section class="section">
+
+            <div class="container">
+
+                <!-- Quick Actions -->
+
+                <div class="dashboard-actions">
+
+                    <a href="lost.html" class="action-card">
+
+                        <div class="action-icon">
+                            🔍
+                        </div>
+
+                        <h3>
+                            Report Lost Item
+                        </h3>
+
+                        <p>
+                            Report something you've lost.
+                        </p>
+
+                    </a>
+
+
+                    <a href="found.html" class="action-card">
+
+                        <div class="action-icon">
+                            📦
+                        </div>
+
+                        <h3>
+                            Report Found Item
+                        </h3>
+
+                        <p>
+                            Help someone find their item.
+                        </p>
+
+                    </a>
+
+
+                    <a href="found.html" class="action-card">
+
+                        <div class="action-icon">
+                            🔎
+                        </div>
+
+                        <h3>
+                            Browse Found Items
+                        </h3>
+
+                        <p>
+                            Search items reported by students.
+                        </p>
+
+                    </a>
+
+                </div>
+
+
+                <!-- Statistics -->
+
+                <div class="dashboard-section">
+
+                    <div class="section-title-row">
+
+                        <div>
+                            <span>OVERVIEW</span>
+                            <h2>Your Activity</h2>
+                        </div>
+
+                    </div>
+
+
+                    <div class="stats-grid">
+
+                        <div class="stat-card">
+
+                            <span class="stat-label">
+                                Lost Reports
+                            </span>
+
+                            <strong id="lostCount">
+                                0
+                            </strong>
+
+                        </div>
+
+
+                        <div class="stat-card">
+
+                            <span class="stat-label">
+                                Found Reports
+                            </span>
+
+                            <strong id="foundCount">
+                                0
+                            </strong>
+
+                        </div>
+
+
+                        <div class="stat-card">
+
+                            <span class="stat-label">
+                                Potential Matches
+                            </span>
+
+                            <strong id="matchCount">
+                                0
+                            </strong>
+
+                        </div>
+
+
+                        <div class="stat-card">
+
+                            <span class="stat-label">
+                                Returned Items
+                            </span>
+
+                            <strong id="returnedCount">
+                                0
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Recent Activity -->
+
+                <div class="dashboard-section">
+
+                    <div class="section-title-row">
+
+                        <div>
+                            <span>RECENT</span>
+                            <h2>Recent Activity</h2>
+                        </div>
+
+                        <a href="notifications.html" class="text-link">
+                            View notifications →
+                        </a>
+
+                    </div>
+
+
+                    <div id="recentActivity" class="activity-list">
+
+                        <div class="empty-state">
+
+                            <div class="empty-icon">
+                                📋
+                            </div>
+
+                            <h3>
+                                No recent activity
+                            </h3>
+
+                            <p>
+                                Your reports and notifications will appear here.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <script src="js/main.js"></script>
+    <script src="js/dashboard.js"></script>
+
+</body>
+
+</html>
