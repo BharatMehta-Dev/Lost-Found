@@ -21,9 +21,10 @@ function validateInstituteEmail(email) {
     */
 
     const allowedDomains = [
-        ".edu",
+        ".mitsgwl.ac.in",
+        "mitsgwalior.in",
         ".ac.in",
-        ".edu.in",
+        ".in",
         ".college"
     ];
 
@@ -36,7 +37,25 @@ function validateInstituteEmail(email) {
 
 
 /* =========================================================
-   2. SIGNUP
+   2. GOOGLE AUTHENTICATION
+   ========================================================= */
+
+const googleAuthButtons = document.querySelectorAll(
+    "#googleSignupButton, #googleLoginButton"
+);
+
+googleAuthButtons.forEach(button => {
+    button.addEventListener("click", () => {
+        showToast(
+            "Google sign-in is not configured yet. Please use the form above.",
+            "error"
+        );
+    });
+});
+
+
+/* =========================================================
+   3. SIGNUP
    ========================================================= */
 
 const signupForm = document.getElementById("signupForm");
@@ -174,7 +193,7 @@ if (signupForm) {
             submitButton.disabled = false;
 
             submitButton.textContent =
-                "Create Account";
+                "Sign Up";
         }
 
     });

@@ -27,7 +27,7 @@
             letter-spacing: -1px;
         }
         .auth-left-content h1 span {
-            color: #10b981;
+            color: #2563eb;
         }
         .auth-left-content p.desc {
             font-size: 1.1rem;
@@ -159,7 +159,7 @@
         }
     </style>
 </head>
-<body class="auth-page" style="background: #fcfcfc; display: flex; flex-direction: column; min-height: 100vh;">
+<body class="auth-page" style="display: flex; flex-direction: column; min-height: 100vh;">
 
     <header class="navbar auth-navbar">
         <div class="container nav-content">
@@ -184,14 +184,14 @@
     <main class="container split-auth-container">
         
         <div class="auth-left-content">
-            <span class="hero-badge" style="background: #ecfdf5; color: #10b981; border: 1px solid #d1fae5; display: inline-flex; align-items: center; gap: 6px;">
-                <span style="font-size: 8px;">🟢</span> Official Portal - MITS Gwalior
+                <span class="hero-badge" style="background: #eff6ff; color: #2563eb; border: 1px solid #dbeafe; display: inline-flex; align-items: center; gap: 6px;">
+                <span style="font-size: 8px;">🔵</span> Official Portal - MITS Gwalior
             </span>
             
             <h1>
                 Lost & Found
                 <br>
-                <span style="color: #10b981;">Management System</span>
+                <span style="color: #2563eb;">Management System</span>
             </h1>
             
             <p class="desc">
@@ -244,9 +244,27 @@
                         <label for="department" style="font-size: 0.85rem;">Department</label>
                         <input type="text" id="department" name="department" placeholder="e.g. CSE" required style="height: 42px;">
                     </div>
+                    <div class="form-group" style="margin-bottom: 12px;">
+                        <label for="year" style="font-size: 0.85rem;">Year</label>
+                        <select id="year" name="year" required style="height: 42px;">
+                            <option value="">Select year</option>
+                            <option value="1">1st Year</option>
+                            <option value="2">2nd Year</option>
+                            <option value="3">3rd Year</option>
+                            <option value="4">4th Year</option>
+                        </select>
+                    </div>
+                    <div class="form-group" style="margin-bottom: 12px;">
+                        <label for="hostel" style="font-size: 0.85rem;">Hostel</label>
+                        <input type="text" id="hostel" name="hostel" placeholder="e.g. Hostel 3" style="height: 42px;">
+                    </div>
                     <div class="form-group" style="margin-bottom: 15px;">
                         <label for="password" style="font-size: 0.85rem;">Password</label>
                         <input type="password" id="password" name="password" placeholder="Create a password" required style="height: 42px;">
+                    </div>
+                    <div class="form-group" style="margin-bottom: 15px;">
+                        <label for="confirmPassword" style="font-size: 0.85rem;">Confirm Password</label>
+                        <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Re-enter your password" required style="height: 42px;">
                     </div>
                     <button type="submit" class="btn btn-full" style="background: #0f172a; color: white; height: 44px; min-height: 44px; margin-top: 5px;">
                         Sign Up
@@ -257,7 +275,7 @@
                     <span style="font-size: 0.7rem; color: #cbd5e1;">OR</span>
                 </div>
 
-                <button class="google-btn">
+                <button type="button" id="googleSignupButton" class="google-btn">
                     <span style="background: white; border-radius: 50%; width: 22px; height: 22px; display: flex; align-items: center; justify-content: center; color: #000; font-weight: bold; font-size: 0.85rem;">G</span>
                     Sign up with Google
                 </button>
