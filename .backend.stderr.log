@@ -1,0 +1,16 @@
+C:\Users\ASUS\OneDrive\Desktop\Projects\LostandFound\backend\config\db.js:6
+        throw new Error("MONGO_URI is not configured. Add it to backend/.env.");
+              ^
+
+Error: MONGO_URI is not configured. Add it to backend/.env.
+    at connectDB (C:\Users\ASUS\OneDrive\Desktop\Projects\LostandFound\backend\config\db.js:6:15)
+    at Object.<anonymous> (C:\Users\ASUS\OneDrive\Desktop\Projects\LostandFound\backend\server.js:15:1)
+    at Module._compile (node:internal/modules/cjs/loader:1811:14)
+    at Object..js (node:internal/modules/cjs/loader:1951:10)
+    at Module.load (node:internal/modules/cjs/loader:1532:32)
+    at Module._load (node:internal/modules/cjs/loader:1334:12)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)
+    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)
+    at node:internal/main/run_main_module:33:47
+
+Node.js v25.7.0
