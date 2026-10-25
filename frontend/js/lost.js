@@ -1,3 +1,5 @@
+import { uploadItemImage } from "./firebase.js";
+
 /* =========================================================
    LOST ITEMS
    lost.js
@@ -113,87 +115,35 @@ if (lostItemForm) {
             submitButton.disabled = true;
 
             submitButton.textContent =
-                "Submitting...";
+                imageInput?.files?.[0] ? "Optimizing image..." : "Submitting...";
 
 
             try {
-
-                /*
-                   FormData is used because we may upload
-                   an image along with the report.
-                */
-
-                const formData = new FormData();
-
-                formData.append(
-                    "itemName",
-                    itemName
+                const imageUrl = await uploadItemImage(
+                    imageInput?.files?.[0],
+                    "lost-items"
                 );
 
-                formData.append(
-                    "category",
-                    category
-                );
-
-                formData.append(
-                    "brand",
-                    brand
-                );
-
-                formData.append(
-                    "color",
-                    color
-                );
-
-                formData.append(
-                    "description",
-                    description
-                );
-
-                formData.append(
-                    "areaType",
-                    areaType
-                );
-
-                formData.append(
-                    "location",
-                    location
-                );
-
-                formData.append(
-                    "lostDate",
-                    lostDate
-                );
-
-                formData.append(
-                    "lostTime",
-                    lostTime
-                );
-
-                formData.append(
-                    "privateDetails",
-                    privateDetails
-                );
-
-
-                if (
-                    imageInput &&
-                    imageInput.files.length > 0
-                ) {
-
-                    formData.append(
-                        "image",
-                        imageInput.files[0]
-                    );
-                }
-
+                submitButton.textContent = "Saving report...";
 
                 const data =
                     await apiRequest(
                         "/lost",
                         {
                             method: "POST",
-                            body: formData
+                            body: JSON.stringify({
+                                itemName,
+                                category,
+                                brand,
+                                color,
+                                description,
+                                campus: areaType,
+                                lostLocation: location,
+                                lostDate,
+                                lostTime,
+                                privateDetails,
+                                image: imageUrl
+                            })
                         }
                     );
 
@@ -207,10 +157,9 @@ if (lostItemForm) {
 
                 setTimeout(() => {
 
-                    window.location.href =
-                        "dashboard.html";
+                    window.location.href = "dashboard.html";
 
-                }, 1000);
+                }, 400);
 
 
             } catch (error) {

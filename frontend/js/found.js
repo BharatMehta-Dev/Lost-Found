@@ -1,3 +1,5 @@
+import { uploadItemImage } from "./firebase.js";
+
 /* =========================================================
    FOUND ITEMS
    found.js
@@ -281,14 +283,151 @@ function createItemCard(item) {
                 type="button"
                 class="btn btn-secondary"
                 style="width:100%; margin-top:18px;"
-                onclick="viewFoundItem('${escapeHTML(item._id || item.id)}')"
+                data-action="view"
+                data-item-id="${escapeHTML(item._id || item.id)}"
             >
                 View Details
+            </button>
+
+            <button
+                type="button"
+                class="btn btn-primary"
+                style="width:100%; margin-top:10px;"
+                data-action="claim"
+                data-item-id="${escapeHTML(item._id || item.id)}"
+            >
+                Claim This Item
             </button>
 
         </article>
     `;
 }
+
+/* =========================================================
+   CLAIM MODAL CONTROLLER
+   ========================================================= */
+
+const claimModalContainer = document.getElementById("claimModalContainer");
+const closeClaimModal = document.getElementById("closeClaimModal");
+const cancelClaimBtn = document.getElementById("cancelClaimBtn");
+const claimItemForm = document.getElementById("claimItemForm");
+const claimLostItemSelect = document.getElementById("claimLostItemSelect");
+const claimModalItemTitle = document.getElementById("claimModalItemTitle");
+const claimTargetFoundId = document.getElementById("claimTargetFoundId");
+const claimProofText = document.getElementById("claimProofText");
+const claimNotesText = document.getElementById("claimNotesText");
+
+function closeClaimModalHandler() {
+    claimModalContainer?.classList.add("hidden");
+    claimItemForm?.reset();
+}
+
+async function claimFoundItem(itemId) {
+    const foundItem = foundItems.find((item) => (item._id || item.id) === itemId);
+
+    let myLostItems = [];
+    try {
+        const response = await apiRequest("/lost/my");
+        myLostItems = response.items || [];
+    } catch (error) {
+        showToast(error.message, "error");
+        return;
+    }
+
+    if (!myLostItems.length) {
+        showToast("Please report your lost item first before filing a claim.", "error");
+        return;
+    }
+
+    if (claimModalItemTitle) {
+        claimModalItemTitle.textContent = `Claim: ${foundItem?.itemName || "Found Item"}`;
+    }
+
+    if (claimTargetFoundId) {
+        claimTargetFoundId.value = itemId;
+    }
+
+    if (claimLostItemSelect) {
+        claimLostItemSelect.innerHTML = `
+            <option value="">-- Select matching lost report --</option>
+            ${myLostItems.map((item) => `
+                <option value="${escapeHTML(item.id)}">
+                    ${escapeHTML(item.itemName)} (${escapeHTML(item.category || "Item")}) - ${escapeHTML(item.lostLocation || "Campus")}
+                </option>
+            `).join("")}
+        `;
+    }
+
+    claimModalContainer?.classList.remove("hidden");
+}
+
+if (closeClaimModal) {
+    closeClaimModal.addEventListener("click", closeClaimModalHandler);
+}
+
+if (cancelClaimBtn) {
+    cancelClaimBtn.addEventListener("click", closeClaimModalHandler);
+}
+
+if (claimModalContainer) {
+    claimModalContainer.addEventListener("click", (event) => {
+        if (event.target === claimModalContainer) {
+            closeClaimModalHandler();
+        }
+    });
+}
+
+if (claimItemForm) {
+    claimItemForm.addEventListener("submit", async (event) => {
+        event.preventDefault();
+
+        const submitBtn = document.getElementById("submitClaimBtn");
+        const foundItemId = claimTargetFoundId?.value;
+        const lostItemId = claimLostItemSelect?.value;
+        const proof = claimProofText?.value.trim();
+        const notes = claimNotesText?.value.trim() || "";
+
+        if (!foundItemId || !lostItemId) {
+            showToast("Please select your matching lost report.", "error");
+            return;
+        }
+
+        if (!proof) {
+            showToast("Please provide proof of ownership.", "error");
+            return;
+        }
+
+        if (submitBtn) {
+            submitBtn.disabled = true;
+            submitBtn.textContent = "Submitting Claim...";
+        }
+
+        try {
+            await apiRequest("/claims", {
+                method: "POST",
+                body: JSON.stringify({
+                    foundItemId,
+                    lostItemId,
+                    proof,
+                    notes
+                })
+            });
+
+            showToast("Claim submitted successfully! The finder will review it.", "success");
+            closeClaimModalHandler();
+        } catch (error) {
+            showToast(error.message, "error");
+        } finally {
+            if (submitBtn) {
+                submitBtn.disabled = false;
+                submitBtn.textContent = "Submit Claim";
+            }
+        }
+    });
+}
+
+window.claimFoundItem = claimFoundItem;
+
 
 
 /* =========================================================
@@ -480,6 +619,20 @@ async function viewFoundItem(itemId) {
     }
 }
 
+window.viewFoundItem = viewFoundItem;
+
+foundItemsGrid?.addEventListener("click", (event) => {
+    const button = event.target.closest("button[data-action]");
+    if (!button) return;
+
+    const itemId = button.dataset.itemId;
+    if (button.dataset.action === "view") {
+        viewFoundItem(itemId);
+    } else if (button.dataset.action === "claim") {
+        claimFoundItem(itemId);
+    }
+});
+
 
 /* =========================================================
    MODAL OPEN/CLOSE
@@ -631,75 +784,28 @@ if (foundItemForm) {
 
 
             try {
-
-                const formData =
-                    new FormData();
-
-
-                formData.append(
-                    "itemName",
-                    itemName
+                const imageUrl = await uploadItemImage(
+                    imageInput?.files?.[0],
+                    "found-items"
                 );
-
-                formData.append(
-                    "category",
-                    category
-                );
-
-                formData.append(
-                    "brand",
-                    brand
-                );
-
-                formData.append(
-                    "color",
-                    color
-                );
-
-                formData.append(
-                    "description",
-                    description
-                );
-
-                formData.append(
-                    "areaType",
-                    areaType
-                );
-
-                formData.append(
-                    "location",
-                    location
-                );
-
-                formData.append(
-                    "dateFound",
-                    date
-                );
-
-                formData.append(
-                    "timeFound",
-                    time
-                );
-
-
-                if (
-                    imageInput &&
-                    imageInput.files.length > 0
-                ) {
-
-                    formData.append(
-                        "image",
-                        imageInput.files[0]
-                    );
-                }
-
 
                 const data =
                     await apiRequest(
                         "/found",
                         {
                             method: "POST",
-                            body: formData
+                            body: JSON.stringify({
+                                itemName,
+                                category,
+                                brand,
+                                color,
+                                description,
+                                areaType,
+                                location,
+                                dateFound: date,
+                                timeFound: time,
+                                image: imageUrl
+                            })
                         }
                     );
 

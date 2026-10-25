@@ -116,6 +116,11 @@ async function apiRequest(endpoint, options = {}) {
         }
 
         if (!response.ok) {
+            console.error("API request failed:", {
+                endpoint,
+                status: response.status,
+                data
+            });
 
             if (response.status === 401) {
                 removeToken();
@@ -130,7 +135,9 @@ async function apiRequest(endpoint, options = {}) {
             }
 
             throw new Error(
-                data.message || "Something went wrong."
+                data.details
+                    ? `${data.message || "Something went wrong."} ${data.details}`
+                    : data.message || "Something went wrong."
             );
         }
 

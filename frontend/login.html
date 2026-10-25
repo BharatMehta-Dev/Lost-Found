@@ -230,7 +230,7 @@
                 </div>
                 
                 <h2 style="font-size: 1.5rem; color: #0f172a; margin-bottom: 6px; letter-spacing: -0.5px;">Sign in to L&F System</h2>
-                <p style="color: #64748b; font-size: 0.9rem; margin-bottom: 25px;">Access your campus lost & found dashboard</p>
+                <p style="color: #64748b; font-size: 0.9rem; margin-bottom: 25px;">Sign in with your campus account</p>
 
                 <form id="loginForm" style="text-align: left;">
                     <div class="form-group">
@@ -242,22 +242,22 @@
                         <input type="password" id="password" name="password" placeholder="Enter your password" required style="height: 42px;">
                     </div>
                     <button type="submit" class="btn btn-full" style="background: #0f172a; color: white; height: 44px; min-height: 44px; margin-top: 10px;">
-                        Sign In
+                        Log In
                     </button>
                 </form>
 
-                <div class="auth-divider" style="margin: 18px 0;">
+                <div class="auth-divider" style="margin: 18px 0; display: none;">
                     <span style="font-size: 0.7rem; color: #cbd5e1;">OR</span>
                 </div>
 
-                <button type="button" id="googleLoginButton" class="google-btn">
+                <button type="button" id="googleLoginButton" class="google-btn" style="display: none;">
                     <span style="background: white; border-radius: 50%; width: 22px; height: 22px; display: flex; align-items: center; justify-content: center; color: #000; font-weight: bold; font-size: 0.85rem;">G</span>
                     Continue with Google
                 </button>
 
                 <div class="auth-secure-note">
                     <span style="font-size: 1rem;">🛡️</span><br>
-                    Secure authentication powered by Google.<br>Use your institutional email to sign in.
+                    Secure authentication for MITS Gwalior.<br>Use your institutional email to sign in.
                 </div>
                 
                 <div style="margin-top: 20px;">
@@ -287,6 +287,6 @@
     </footer>
 
     <script src="js/main.js"></script>
-    <script src="js/auth.js"></script>
+    <script type="module" src="js/auth.js"></script>
 </body>
 </html>

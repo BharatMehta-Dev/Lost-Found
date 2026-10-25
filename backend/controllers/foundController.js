@@ -1,11 +1,14 @@
-const FoundItem = require("../models/FoundItem");
-const Notification = require("../models/Notification");
+const { db } = require("../firebaseAdmin");
+
+const foundItems = db.collection("foundItems");
 
 const getFoundItems = async (req, res) => {
   try {
-    const items = await FoundItem.find({ status: { $ne: "resolved" } })
-      .sort({ createdAt: -1 })
-      .populate("reportedBy", "name email department hostel");
+    const snapshot = await foundItems.get();
+    const items = snapshot.docs
+      .map((document) => ({ id: document.id, ...document.data() }))
+      .filter((item) => item.status !== "resolved")
+      .sort((first, second) => second.createdAt.localeCompare(first.createdAt));
 
     return res.json({
       message: "Found items loaded successfully.",
@@ -21,16 +24,13 @@ const getFoundItems = async (req, res) => {
 
 const getFoundItemById = async (req, res) => {
   try {
-    const item = await FoundItem.findById(req.params.id).populate(
-      "reportedBy",
-      "name email department hostel"
-    );
+    const document = await foundItems.doc(req.params.id).get();
 
-    if (!item) {
+    if (!document.exists) {
       return res.status(404).json({ message: "Found item not found." });
     }
 
-    return res.json({ item });
+    return res.json({ item: { id: document.id, ...document.data() } });
   } catch (error) {
     return res.status(500).json({
       message: "Unable to fetch found item details.",
@@ -50,7 +50,8 @@ const createFoundItem = async (req, res) => {
       areaType,
       location,
       dateFound,
-      timeFound
+      timeFound,
+      image
     } = req.body;
 
     if (!itemName || !category || !description || !areaType || !location || !dateFound) {
@@ -59,34 +60,28 @@ const createFoundItem = async (req, res) => {
       });
     }
 
-    const imagePath = req.file
-      ? `/uploads/${req.file.filename}`
-      : "";
-
-    const item = await FoundItem.create({
-      itemName,
-      category,
-      brand: brand || "",
-      color: color || "",
-      description,
+    const item = {
+      itemName: itemName.trim(),
+      category: category.trim(),
+      brand: brand?.trim() || "",
+      color: color?.trim() || "",
+      description: description.trim(),
       areaType,
-      location,
+      location: location.trim(),
       dateFound,
       timeFound: timeFound || "",
-      image: imagePath,
-      reportedBy: req.user._id
-    });
+      image: image || "",
+      reportedBy: req.user.uid,
+      status: "active",
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString()
+    };
 
-    await Notification.create({
-      user: req.user._id,
-      title: "Found item reported",
-      message: `You reported a found item: ${item.itemName}`,
-      type: "system"
-    });
+    const document = await foundItems.add(item);
 
     return res.status(201).json({
       message: "Found item reported successfully.",
-      item
+      item: { id: document.id, ...item }
     });
   } catch (error) {
     return res.status(500).json({

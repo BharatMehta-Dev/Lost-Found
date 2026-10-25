@@ -1,14 +1,17 @@
 const express = require("express");
 
 const {
-    getCurrentUser
+    getCurrentUser,
+    updateCurrentUser
 } = require("../controllers/userController");
 
 const protect = require("../middleware/authMiddleware");
 
 const router = express.Router();
 
-// GET /api/users/me
-router.get("/me", protect, getCurrentUser);
+// GET & PUT /api/users/me
+router.route("/me")
+    .get(protect, getCurrentUser)
+    .put(protect, updateCurrentUser);
 
 module.exports = router;

@@ -1,2 +1,16 @@
+# Dependencies
 node_modules/
+
+# Environment and Secrets
 .env
+backend/.env
+backend/serviceAccountKey.json
+
+# Logs
+*.log
+.backend.*.log
+
+# Build & Editor artifacts
+.dist/
+.vscode/
+.DS_Store

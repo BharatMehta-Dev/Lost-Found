@@ -1,199 +1,63 @@
-const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
-const User = require("../models/User");
+const { auth, db } = require("../firebaseAdmin");
 
-// Generate JWT token
-const generateToken = (userId) => {
-    return jwt.sign(
-        {
-            userId: userId
-        },
-        process.env.JWT_SECRET,
-        {
-            expiresIn: "7d"
-        }
-    );
-};
-
-
-// ===============================
-// REGISTER USER
-// ===============================
 const registerUser = async (req, res) => {
-    try {
-        const {
-            name,
-            email,
-            password,
-            department,
-            year,
-            hostel
-        } = req.body;
+  try {
+    const { name, email, password, department, year, hostel } = req.body;
 
-        // Check required fields
-        if (
-            !name ||
-            !email ||
-            !password ||
-            !department ||
-            !year
-        ) {
-            return res.status(400).json({
-                success: false,
-                message: "Please fill all required fields."
-            });
-        }
-
-        // Clean email
-        const cleanEmail = email.trim().toLowerCase();
-
-        // Validate institute email
-        const collegeDomain = process.env.COLLEGE_EMAIL_DOMAIN;
-
-        if (!collegeDomain) {
-            return res.status(500).json({
-                success: false,
-                message: "College email domain is not configured."
-            });
-        }
-
-        if (!cleanEmail.endsWith(collegeDomain.toLowerCase())) {
-            return res.status(400).json({
-                success: false,
-                message: "Please use your institute email address."
-            });
-        }
-
-        // Password length
-        if (password.length < 6) {
-            return res.status(400).json({
-                success: false,
-                message: "Password must contain at least 6 characters."
-            });
-        }
-
-        // Check existing user
-        const existingUser = await User.findOne({
-            email: cleanEmail
-        });
-
-        if (existingUser) {
-            return res.status(409).json({
-                success: false,
-                message: "An account with this email already exists."
-            });
-        }
-
-        // Hash password
-        const salt = await bcrypt.genSalt(10);
-        const hashedPassword = await bcrypt.hash(password, salt);
-
-        // Create user
-        const user = await User.create({
-            name: name.trim(),
-            email: cleanEmail,
-            password: hashedPassword,
-            department: department.trim(),
-            year: year.trim(),
-            hostel: hostel ? hostel.trim() : ""
-        });
-
-        // Response
-        res.status(201).json({
-            success: true,
-            message: "Account created successfully.",
-            user: {
-                id: user._id,
-                name: user.name,
-                email: user.email,
-                department: user.department,
-                year: user.year,
-                hostel: user.hostel
-            }
-        });
-
-    } catch (error) {
-        console.error("Register error:", error);
-
-        res.status(500).json({
-            success: false,
-            message: "Server error while creating account."
-        });
+    if (!name || !email || !password || !department || !year) {
+      return res.status(400).json({ success: false, message: "Please fill all required fields." });
     }
+
+    if (password.length < 6) {
+      return res.status(400).json({ success: false, message: "Password must contain at least 6 characters." });
+    }
+
+    const cleanEmail = email.trim().toLowerCase();
+    const collegeDomain = process.env.COLLEGE_EMAIL_DOMAIN;
+
+    if (collegeDomain && !cleanEmail.endsWith(collegeDomain.toLowerCase())) {
+      return res.status(400).json({ success: false, message: "Please use your institute email address." });
+    }
+
+    const firebaseUser = await auth.createUser({
+      email: cleanEmail,
+      password,
+      displayName: name.trim()
+    });
+
+    const profile = {
+      name: name.trim(),
+      email: cleanEmail,
+      department: department.trim(),
+      year: year.trim(),
+      hostel: hostel?.trim() || "",
+      profileImage: "",
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString()
+    };
+
+    await db.collection("users").doc(firebaseUser.uid).set(profile);
+
+    return res.status(201).json({
+      success: true,
+      message: "Account created successfully.",
+      user: { id: firebaseUser.uid, ...profile }
+    });
+  } catch (error) {
+    console.error("Register error:", error);
+    const status = error.code === "auth/email-already-exists" ? 409 : 500;
+    return res.status(status).json({
+      success: false,
+      message: status === 409 ? "An account with this email already exists." : "Server error while creating account."
+    });
+  }
 };
 
-
-// ===============================
-// LOGIN USER
-// ===============================
 const loginUser = async (req, res) => {
-    try {
-        const { email, password } = req.body;
-
-        // Check fields
-        if (!email || !password) {
-            return res.status(400).json({
-                success: false,
-                message: "Email and password are required."
-            });
-        }
-
-        const cleanEmail = email.trim().toLowerCase();
-
-        // Find user
-        const user = await User.findOne({
-            email: cleanEmail
-        });
-
-        if (!user) {
-            return res.status(401).json({
-                success: false,
-                message: "Invalid email or password."
-            });
-        }
-
-        // Compare password
-        const isPasswordCorrect = await bcrypt.compare(
-            password,
-            user.password
-        );
-
-        if (!isPasswordCorrect) {
-            return res.status(401).json({
-                success: false,
-                message: "Invalid email or password."
-            });
-        }
-
-        // Generate JWT
-        const token = generateToken(user._id.toString());
-
-        res.status(200).json({
-            success: true,
-            message: "Login successful.",
-            token,
-            user: {
-                id: user._id,
-                name: user.name,
-                email: user.email,
-                department: user.department,
-                year: user.year,
-                hostel: user.hostel,
-                profileImage: user.profileImage
-            }
-        });
-
-    } catch (error) {
-        console.error("Login error:", error);
-
-        res.status(500).json({
-            success: false,
-            message: "Server error while logging in."
-        });
-    }
+  return res.status(400).json({
+    success: false,
+    message: "Use Firebase Authentication on the frontend to log in."
+  });
 };
 
-module.exports = {
-    registerUser,
-    loginUser
-};
+module.exports = { registerUser, loginUser };

@@ -1,7 +1,6 @@
 const express = require("express");
 const cors = require("cors");
 const dotenv = require("dotenv");
-const mongoose = require("mongoose");
 const path = require("path");
 
 const authRoutes = require("./routes/authRoutes");
@@ -10,6 +9,7 @@ const lostRoutes = require("./routes/lostRoutes");
 const foundRoutes = require("./routes/foundRoutes");
 const claimRoutes = require("./routes/claimRoutes");
 const notificationRoutes = require("./routes/notificationRoutes");
+require("./firebaseAdmin");
 const protect = require("./middleware/authMiddleware");
 const { getDashboard } = require("./controllers/dashboardController");
 
@@ -29,8 +29,6 @@ app.use("/api/found", foundRoutes);
 app.use("/api/claims", claimRoutes);
 app.use("/api/notifications", notificationRoutes);
 app.get("/api/dashboard", protect, getDashboard);
-
-app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 app.get("/api/health", (req, res) => {
   res.json({ ok: true, message: "Lost & Found API is running" });
@@ -53,15 +51,11 @@ app.use((err, req, res, next) => {
 
 const startServer = async () => {
   try {
-    const mongoUri = process.env.MONGO_URI || "mongodb://127.0.0.1:27017/lostfound";
-    await mongoose.connect(mongoUri);
-    console.log("MongoDB connected");
-
     app.listen(PORT, () => {
       console.log(`Server running on http://localhost:${PORT}`);
     });
   } catch (error) {
-    console.error("MongoDB connection failed:", error.message);
+    console.error("Server startup failed:", error.message);
     process.exit(1);
   }
 };

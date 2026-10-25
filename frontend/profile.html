@@ -354,11 +354,99 @@
 
         </section>
 
+        <!-- Edit Profile Modal -->
+        <div id="editProfileModal" class="modal-container hidden">
+            <div class="modal-card">
+                <button type="button" class="modal-close" id="closeEditProfileModal">&times;</button>
+                <div class="modal-header">
+                    <span>PROFILE SETTINGS</span>
+                    <h2>Edit Profile Details</h2>
+                    <p>Update your personal and campus information.</p>
+                </div>
+                <form id="editProfileForm">
+                    <div class="form-group" style="margin-bottom: 16px;">
+                        <label for="editName" style="display: block; font-weight: 600; margin-bottom: 6px; font-size: 0.9rem;">Full Name</label>
+                        <input type="text" id="editName" required style="width: 100%; padding: 10px 14px; border: 1px solid #cbd5e1; border-radius: 8px;">
+                    </div>
+                    <div class="form-row" style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 16px;">
+                        <div class="form-group">
+                            <label for="editDepartment" style="display: block; font-weight: 600; margin-bottom: 6px; font-size: 0.9rem;">Department</label>
+                            <select id="editDepartment" required style="width: 100%; padding: 10px 14px; border: 1px solid #cbd5e1; border-radius: 8px;">
+                                <option value="cse">Computer Science</option>
+                                <option value="ece">Electronics & Communication</option>
+                                <option value="ee">Electrical Engineering</option>
+                                <option value="me">Mechanical Engineering</option>
+                                <option value="ce">Civil Engineering</option>
+                                <option value="it">Information Technology</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="editYear" style="display: block; font-weight: 600; margin-bottom: 6px; font-size: 0.9rem;">Year</label>
+                            <select id="editYear" required style="width: 100%; padding: 10px 14px; border: 1px solid #cbd5e1; border-radius: 8px;">
+                                <option value="1">1st Year</option>
+                                <option value="2">2nd Year</option>
+                                <option value="3">3rd Year</option>
+                                <option value="4">4th Year</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row" style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 22px;">
+                        <div class="form-group">
+                            <label for="editHostel" style="display: block; font-weight: 600; margin-bottom: 6px; font-size: 0.9rem;">Hostel / Residence</label>
+                            <input type="text" id="editHostel" placeholder="e.g. Hostel 3 or Day Scholar" style="width: 100%; padding: 10px 14px; border: 1px solid #cbd5e1; border-radius: 8px;">
+                        </div>
+                        <div class="form-group">
+                            <label for="editPhone" style="display: block; font-weight: 600; margin-bottom: 6px; font-size: 0.9rem;">Phone (Optional)</label>
+                            <input type="tel" id="editPhone" placeholder="10-digit number" style="width: 100%; padding: 10px 14px; border: 1px solid #cbd5e1; border-radius: 8px;">
+                        </div>
+                    </div>
+                    <div style="display: flex; justify-content: flex-end; gap: 10px;">
+                        <button type="button" class="btn btn-secondary" id="cancelEditProfileBtn">Cancel</button>
+                        <button type="submit" class="btn btn-primary" id="saveProfileBtn">Save Changes</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Change Password Modal -->
+        <div id="changePasswordModal" class="modal-container hidden">
+            <div class="modal-card">
+                <button type="button" class="modal-close" id="closePasswordModal">&times;</button>
+                <div class="modal-header">
+                    <span>SECURITY</span>
+                    <h2>Change Password</h2>
+                    <p>Enter your current password and choose a new secure password.</p>
+                </div>
+                <form id="changePasswordForm">
+                    <div class="form-group" style="margin-bottom: 16px;">
+                        <label for="currentPassword" style="display: block; font-weight: 600; margin-bottom: 6px; font-size: 0.9rem;">Current Password</label>
+                        <input type="password" id="currentPassword" required style="width: 100%; padding: 10px 14px; border: 1px solid #cbd5e1; border-radius: 8px;">
+                    </div>
+                    <div class="form-group" style="margin-bottom: 16px;">
+                        <label for="newPassword" style="display: block; font-weight: 600; margin-bottom: 6px; font-size: 0.9rem;">New Password (Min 8 chars)</label>
+                        <input type="password" id="newPassword" minlength="8" required style="width: 100%; padding: 10px 14px; border: 1px solid #cbd5e1; border-radius: 8px;">
+                    </div>
+                    <div class="form-group" style="margin-bottom: 22px;">
+                        <label for="confirmNewPassword" style="display: block; font-weight: 600; margin-bottom: 6px; font-size: 0.9rem;">Confirm New Password</label>
+                        <input type="password" id="confirmNewPassword" minlength="8" required style="width: 100%; padding: 10px 14px; border: 1px solid #cbd5e1; border-radius: 8px;">
+                    </div>
+                    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
+                        <button type="button" id="sendResetEmailBtn" style="background: none; border: none; color: #2563eb; font-size: 0.85rem; font-weight: 600; text-decoration: underline; cursor: pointer; padding: 0;">Send Reset Link to Email</button>
+                        <div style="display: flex; gap: 10px;">
+                            <button type="button" class="btn btn-secondary" id="cancelPasswordBtn">Cancel</button>
+                            <button type="submit" class="btn btn-primary" id="savePasswordBtn">Update Password</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
     </main>
 
 
     <script src="js/main.js"></script>
-    <script src="js/profile.js"></script>
+    <script type="module" src="js/profile.js"></script>
 
 </body>
 

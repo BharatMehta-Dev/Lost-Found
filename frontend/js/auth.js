@@ -1,7 +1,14 @@
+import {
+    GoogleAuthProvider,
+    signInWithEmailAndPassword,
+    signInWithPopup
+} from "https://www.gstatic.com/firebasejs/13.0.0/firebase-auth.js";
+import { auth } from "./firebase.js";
+
 /* =========================================================
-   AUTHENTICATION
-   auth.js
-   ========================================================= */
+    AUTHENTICATION
+    auth.js
+    ========================================================= */
 
 
 /* =========================================================
@@ -44,12 +51,33 @@ const googleAuthButtons = document.querySelectorAll(
     "#googleSignupButton, #googleLoginButton"
 );
 
+const googleProvider = new GoogleAuthProvider();
+
 googleAuthButtons.forEach(button => {
-    button.addEventListener("click", () => {
-        showToast(
-            "Google sign-in is not configured yet. Please use the form above.",
-            "error"
-        );
+    button.addEventListener("click", async () => {
+        button.disabled = true;
+        const originalText = button.textContent;
+        button.textContent = "Signing in...";
+
+        try {
+            const userCredential = await signInWithPopup(auth, googleProvider);
+            const user = userCredential.user;
+            const token = await user.getIdToken();
+
+            setToken(token);
+            setStoredUser({
+                uid: user.uid,
+                name: user.displayName || "",
+                email: user.email || ""
+            });
+
+            window.location.href = "dashboard.html";
+        } catch (error) {
+            showToast(error.message, "error");
+        } finally {
+            button.disabled = false;
+            button.textContent = originalText;
+        }
     });
 });
 
@@ -241,42 +269,17 @@ if (loginForm) {
 
         try {
 
-            const data = await apiRequest(
-                "/auth/login",
-                {
-                    method: "POST",
+            const userCredential =
+                await signInWithEmailAndPassword(auth, email, password);
 
-                    body: JSON.stringify({
-                        email,
-                        password
-                    })
-                }
-            );
+            const user = userCredential.user;
+            const token = await user.getIdToken();
 
-
-            /*
-               Expected backend response:
-
-               {
-                   token: "...",
-                   user: {...}
-               }
-            */
-
-            if (!data.token) {
-
-                throw new Error(
-                    "Login response did not contain an authentication token."
-                );
-            }
-
-
-            setToken(data.token);
-
-
-            if (data.user) {
-                setStoredUser(data.user);
-            }
+            setToken(token);
+            setStoredUser({
+                uid: user.uid,
+                email: user.email
+            });
 
 
             showToast(

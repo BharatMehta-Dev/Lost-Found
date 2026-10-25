@@ -1,282 +1,103 @@
-const LostItem = require("../models/LostItem");
+const { db } = require("../firebaseAdmin");
 
-// ==========================================
-// CREATE LOST ITEM
-// ==========================================
+const lostItems = db.collection("lostItems");
+
+const toItem = (document) => ({ id: document.id, ...document.data() });
 
 const createLostItem = async (req, res) => {
-    try {
-        const {
-            itemName,
-            category,
-            brand,
-            color,
-            description,
-            lostLocation,
-            lostDate,
-            lostTime,
-            campus,
-            hostel,
-            image
-        } = req.body;
-
-        // Required fields
-        if (
-            !itemName ||
-            !category ||
-            !description ||
-            !lostLocation ||
-            !lostDate ||
-            !campus
-        ) {
-            return res.status(400).json({
-                success: false,
-                message: "Please fill all required fields."
-            });
-        }
-
-        // Validate date
-        const parsedDate = new Date(lostDate);
-
-        if (isNaN(parsedDate.getTime())) {
-            return res.status(400).json({
-                success: false,
-                message: "Invalid lost date."
-            });
-        }
-
-        // Create lost item
-        const lostItem = await LostItem.create({
-            user: req.userId,
-            itemName: itemName.trim(),
-            category: category.trim(),
-            brand: brand ? brand.trim() : "",
-            color: color ? color.trim() : "",
-            description: description.trim(),
-            lostLocation: lostLocation.trim(),
-            lostDate: parsedDate,
-            lostTime: lostTime || "",
-            campus: campus.trim(),
-            hostel: hostel ? hostel.trim() : "",
-            image: image || "",
-            status: "lost"
-        });
-
-        res.status(201).json({
-            success: true,
-            message: "Lost item reported successfully.",
-            item: lostItem
-        });
-
-    } catch (error) {
-        console.error("Create lost item error:", error);
-
-        res.status(500).json({
-            success: false,
-            message: "Server error while reporting lost item."
-        });
+  try {
+    const { itemName, category, brand, color, description, lostLocation, lostDate, lostTime, campus, hostel, image, privateDetails } = req.body;
+    if (!itemName || !category || !description || !lostLocation || !lostDate || !campus) {
+      return res.status(400).json({ success: false, message: "Please fill all required fields." });
     }
+    if (Number.isNaN(new Date(lostDate).getTime())) {
+      return res.status(400).json({ success: false, message: "Invalid lost date." });
+    }
+    const now = new Date().toISOString();
+    const item = {
+      userId: req.user.uid,
+      itemName: itemName.trim(),
+      category: category.trim(),
+      brand: brand?.trim() || "",
+      color: color?.trim() || "",
+      description: description.trim(),
+      lostLocation: lostLocation.trim(),
+      lostDate,
+      lostTime: lostTime || "",
+      campus: campus.trim(),
+      hostel: hostel?.trim() || "",
+      image: image || "",
+      privateDetails: privateDetails?.trim() || "",
+      status: "lost",
+      createdAt: now,
+      updatedAt: now
+    };
+    const document = await lostItems.add(item);
+    return res.status(201).json({ success: true, message: "Lost item reported successfully.", item: { id: document.id, ...item } });
+  } catch (error) {
+    console.error("Create lost item error:", error);
+    return res.status(500).json({ success: false, message: "Server error while reporting lost item.", details: process.env.NODE_ENV === "production" ? undefined : error.message });
+  }
 };
-
-
-// ==========================================
-// GET ALL LOST ITEMS
-// ==========================================
 
 const getLostItems = async (req, res) => {
-    try {
-        const items = await LostItem.find({
-            status: "lost"
-        })
-            .populate("user", "name email department year hostel")
-            .sort({ createdAt: -1 });
-
-        res.status(200).json({
-            success: true,
-            count: items.length,
-            items
-        });
-
-    } catch (error) {
-        console.error("Get lost items error:", error);
-
-        res.status(500).json({
-            success: false,
-            message: "Server error while fetching lost items."
-        });
-    }
+  try {
+    const snapshot = await lostItems.where("status", "==", "lost").get();
+    const items = snapshot.docs.map(toItem).sort((a, b) => String(b.createdAt).localeCompare(String(a.createdAt)));
+    return res.json({ success: true, count: items.length, items });
+  } catch (error) {
+    return res.status(500).json({ success: false, message: "Server error while fetching lost items.", details: error.message });
+  }
 };
-
-
-// ==========================================
-// GET MY LOST ITEMS
-// ==========================================
 
 const getMyLostItems = async (req, res) => {
-    try {
-        const items = await LostItem.find({
-            user: req.userId
-        })
-            .sort({ createdAt: -1 });
-
-        res.status(200).json({
-            success: true,
-            count: items.length,
-            items
-        });
-
-    } catch (error) {
-        console.error("Get my lost items error:", error);
-
-        res.status(500).json({
-            success: false,
-            message: "Server error while fetching your lost items."
-        });
-    }
+  try {
+    const snapshot = await lostItems.where("userId", "==", req.user.uid).get();
+    const items = snapshot.docs.map(toItem).sort((a, b) => String(b.createdAt).localeCompare(String(a.createdAt)));
+    return res.json({ success: true, count: items.length, items });
+  } catch (error) {
+    return res.status(500).json({ success: false, message: "Server error while fetching your lost items.", details: error.message });
+  }
 };
-
-
-// ==========================================
-// GET SINGLE LOST ITEM
-// ==========================================
 
 const getLostItemById = async (req, res) => {
-    try {
-        const item = await LostItem.findById(req.params.id)
-            .populate("user", "name email department year hostel");
-
-        if (!item) {
-            return res.status(404).json({
-                success: false,
-                message: "Lost item not found."
-            });
-        }
-
-        res.status(200).json({
-            success: true,
-            item
-        });
-
-    } catch (error) {
-        console.error("Get lost item error:", error);
-
-        res.status(500).json({
-            success: false,
-            message: "Server error while fetching lost item."
-        });
-    }
+  try {
+    const document = await lostItems.doc(req.params.id).get();
+    if (!document.exists) return res.status(404).json({ success: false, message: "Lost item not found." });
+    return res.json({ success: true, item: toItem(document) });
+  } catch (error) {
+    return res.status(500).json({ success: false, message: "Server error while fetching lost item.", details: error.message });
+  }
 };
-
-
-// ==========================================
-// UPDATE LOST ITEM
-// ==========================================
 
 const updateLostItem = async (req, res) => {
-    try {
-        const item = await LostItem.findById(req.params.id);
+  try {
+    const reference = lostItems.doc(req.params.id);
+    const document = await reference.get();
+    if (!document.exists) return res.status(404).json({ success: false, message: "Lost item not found." });
+    if (document.data().userId !== req.user.uid) return res.status(403).json({ success: false, message: "You are not allowed to update this item." });
 
-        if (!item) {
-            return res.status(404).json({
-                success: false,
-                message: "Lost item not found."
-            });
-        }
-
-        // Only owner can update
-        if (item.user.toString() !== req.userId) {
-            return res.status(403).json({
-                success: false,
-                message: "You are not allowed to update this item."
-            });
-        }
-
-        const allowedFields = [
-            "itemName",
-            "category",
-            "brand",
-            "color",
-            "description",
-            "lostLocation",
-            "lostDate",
-            "lostTime",
-            "campus",
-            "hostel",
-            "image",
-            "status"
-        ];
-
-        allowedFields.forEach((field) => {
-            if (req.body[field] !== undefined) {
-                item[field] = req.body[field];
-            }
-        });
-
-        await item.save();
-
-        res.status(200).json({
-            success: true,
-            message: "Lost item updated successfully.",
-            item
-        });
-
-    } catch (error) {
-        console.error("Update lost item error:", error);
-
-        res.status(500).json({
-            success: false,
-            message: "Server error while updating lost item."
-        });
-    }
+    const fields = ["itemName", "category", "brand", "color", "description", "lostLocation", "lostDate", "lostTime", "campus", "hostel", "image", "privateDetails", "status"];
+    const updates = Object.fromEntries(fields.filter((field) => req.body[field] !== undefined).map((field) => [field, req.body[field]]));
+    updates.updatedAt = new Date().toISOString();
+    await reference.update(updates);
+    return res.json({ success: true, message: "Lost item updated successfully." });
+  } catch (error) {
+    return res.status(500).json({ success: false, message: "Server error while updating lost item.", details: error.message });
+  }
 };
-
-
-// ==========================================
-// DELETE LOST ITEM
-// ==========================================
 
 const deleteLostItem = async (req, res) => {
-    try {
-        const item = await LostItem.findById(req.params.id);
-
-        if (!item) {
-            return res.status(404).json({
-                success: false,
-                message: "Lost item not found."
-            });
-        }
-
-        // Only owner can delete
-        if (item.user.toString() !== req.userId) {
-            return res.status(403).json({
-                success: false,
-                message: "You are not allowed to delete this item."
-            });
-        }
-
-        await item.deleteOne();
-
-        res.status(200).json({
-            success: true,
-            message: "Lost item deleted successfully."
-        });
-
-    } catch (error) {
-        console.error("Delete lost item error:", error);
-
-        res.status(500).json({
-            success: false,
-            message: "Server error while deleting lost item."
-        });
-    }
+  try {
+    const reference = lostItems.doc(req.params.id);
+    const document = await reference.get();
+    if (!document.exists) return res.status(404).json({ success: false, message: "Lost item not found." });
+    if (document.data().userId !== req.user.uid) return res.status(403).json({ success: false, message: "You are not allowed to delete this item." });
+    await reference.delete();
+    return res.json({ success: true, message: "Lost item deleted successfully." });
+  } catch (error) {
+    return res.status(500).json({ success: false, message: "Server error while deleting lost item.", details: error.message });
+  }
 };
 
-
-module.exports = {
-    createLostItem,
-    getLostItems,
-    getMyLostItems,
-    getLostItemById,
-    updateLostItem,
-    deleteLostItem
-};
+module.exports = { createLostItem, getLostItems, getMyLostItems, getLostItemById, updateLostItem, deleteLostItem };
